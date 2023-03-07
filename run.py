@@ -1,6 +1,6 @@
 from extract import extract_artist_names, extract_titles_from_artist, extract_info_from_all_artists
 from transform import remove_null_prices, drop_duplicates_titles, convert_df_to_dict, clean_the_text
-from load import load_to_dabase
+from load import load_to_database
 
 # find names from csv file
 artist_names = extract_artist_names()
@@ -20,5 +20,5 @@ for name in artist_names[:1]:
     tracks = convert_df_to_dict(tracks_df, name)
     if name in artist_contents_df.index:
         tracks.update({'Description': artist_contents_df['Content'][name]})
-        load_to_dabase(tracks)
+        load_to_database(tracks)
         print('Artist {} insert to DataBase!'.format(name))
