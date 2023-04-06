@@ -4,12 +4,6 @@ import requests
 from constants import LASTFM_API_KEY, DISCOGS_API_KEY
 
 
-def extract_artist_names():
-    df = pd.read_csv('spotify_artist_data.csv')
-    # return artist names
-    return list(df['Artist Name'].unique())
-
-
 def extract_info_from_all_artists(artists_names):
     artist_contents = {}
 
@@ -31,7 +25,7 @@ def extract_titles_from_artist(name):
     discogs_artist_info = requests.get(url).json()
     id = discogs_artist_info['results'][0]['id']
 
-    print('Search titles from artist ' + name + '...')
+    print('Search releases from discogs.com for artist {} ...'.format(str(name)))
 
     # with id get artist's releases
     url = ('https://api.discogs.com/artists/') + str(id) + ('/releases')
