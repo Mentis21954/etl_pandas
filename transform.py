@@ -13,7 +13,7 @@ def remove_null_prices(df):
     # find and remove the rows/titles where there are no selling prices in discogs.com
     df = df[df['Discogs Price'].notna()]
     # print(df.head())
-    print('Remove tracks where there no selling price in discogs.com')
+    print('Remove releases where there no selling price in discogs.com')
     return df
 
 
