@@ -1,19 +1,28 @@
 import pandas as pd
 
-def clean_the_text(contents_df):
-    # remove new line command and html tags
-    contents_df['Content'] = contents_df['Content'].replace('\n', '', regex=True)
-    contents_df['Content'] = contents_df['Content'].replace(r'<[^<>]*>', '', regex=True)
+def clean_the_text(content: dict):
+    content_df = pd.DataFrame(content.values(), columns=['Content'], index=content.keys())
+    
+     # remove new line commands, html tags and "", ''
+    content_df['Content'] = content_df['Content'].replace(r'\r+|\n+|\t+', '', regex=True)
+    content_df['Content'] = content_df['Content'].replace(r'<[^<>]*>', '', regex=True)
+    content_df['Content'] = content_df['Content'].replace(r'"', '', regex=True)
+    content_df['Content'] = content_df['Content'].replace(r"'", '', regex=True)
     print('Clean the informations text')
 
-    return contents_df
+    return content_df
 
 
-def remove_null_prices(df):
+def remove_wrong_values(releases: dict):
+    df = pd.DataFrame(releases)
+
     # find and remove the rows/titles where there are no selling prices in discogs.com
     df = df[df['Discogs Price'].notna()]
-    # print(df.head())
+    print('Remove releases where have wrong year value in discogs.com')
+    # keep only the rows has positive value of year
+    df = df[df['Year'] > 0]
     print('Remove releases where there no selling price in discogs.com')
+    
     return df
 
 

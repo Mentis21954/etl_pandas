@@ -1,13 +1,11 @@
-import pandas as pd
-import time
 import requests
+import time
 
 LASTFM_API_KEY = '3f8f9f826bc4b0c8b529828839d38e4b'
 DISCOGS_API_KEY = 'hhNKFVCSbBWJATBYMyIxxjCJDSuDZMBGnCapdhOy'
 
-
 def extract_info_from_artist(artists_names):
-    # initialize a dictionary for artists
+    # initialize a list of dictionaries for each artist 
     artist_contents = {}
 
     # extract for all artists' informations from last fm and store as a dict
@@ -18,9 +16,8 @@ def extract_info_from_artist(artists_names):
         artist_contents.update({name: artist_info['artist']['bio']['content']})
         print('Search infrmation for artist {} ...'.format(name))
 
-    # return artist info as a dataframe for transform stage
-    return pd.DataFrame(artist_contents.values(), columns=['Content'], index=artist_contents.keys())
-
+    # return artist info for transform stage
+    return artist_contents
 
 def extract_titles_from_artist(name):
     # get the artist id from artist name
@@ -34,7 +31,7 @@ def extract_titles_from_artist(name):
     url = ('https://api.discogs.com/artists/') + str(id) + ('/releases')
     releases = requests.get(url).json()
 
-     # store the releases/tracks info in a list of dictionaries
+    # store the releases/tracks info in a list
     releases_info = []
     for index in range(len(releases['releases'])):
             url = releases['releases'][index]['resource_url']
@@ -58,7 +55,7 @@ def extract_titles_from_artist(name):
             # sleep 3 secs to don't miss requests
             time.sleep(3)
 
-    print('Find releases from artist ' + str(name) + ' with Discogs ID: ' + str(id))
+    print('Found releases from artist ' + str(name) + ' with Discogs ID: ' + str(id))
 
-    # return artist's releases as a dataframe for transform stage
-    return pd.DataFrame(releases_info)
+    # return artist's tracks for transform stage
+    return releases_info
