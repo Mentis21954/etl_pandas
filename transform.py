@@ -12,10 +12,16 @@ def clean_the_text(content: dict):
 
     return content_df
 
+def merge_titles_data(releases: dict, listeners: dict):  
+  releases_df = pd.DataFrame(releases)
+  listeners_df = pd.DataFrame(listeners)
+  df = pd.merge(releases_df, listeners_df, on='Title')
+  print('Merge releases and listeners data')
+  
+  return df
 
-def remove_wrong_values(releases: dict):
-    df = pd.DataFrame(releases)
 
+def remove_wrong_values(df):
     # find and remove the rows/titles where there are no selling prices in discogs.com
     df = df[df['Discogs Price'].notna()]
     print('Remove releases where have wrong year value in discogs.com')
@@ -29,9 +35,7 @@ def remove_wrong_values(releases: dict):
 def drop_duplicates_titles(df):
     df = df.drop_duplicates(subset=['Title'])
     print('Find and remove the duplicates titles if exist!')
-    return pd.DataFrame(
-        data={'Collaborations': df['Collaborations'].values, 'Year': df['Year'].values, 'Format': df['Format'].values,
-              'Discogs Price': df['Discogs Price'].values}, index=(df['Title'].values))
+    return df.set_index('Title')
 
 
 def integrate_data(content_df, releases_df, name):
