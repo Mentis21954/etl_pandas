@@ -19,7 +19,6 @@ def extract_info_from_artist(artists_names):
     # return artist info for transform stage
     return artist_contents
 
-
 def extract_titles_from_artist(name):
     # get the artist id from artist name
     url = ('https://api.discogs.com/database/search?q=') + name + ('&{?type=artist}&token=') + DISCOGS_API_KEY
@@ -34,7 +33,6 @@ def extract_titles_from_artist(name):
     print('Found releases from discogs.com for artist ' + str(name) + ' with Discogs ID: ' + str(id))
   
     return releases['releases']
-
 
 def find_info_for_titles(releases: dict):
   # store the releases/tracks info in a list
@@ -63,7 +61,6 @@ def find_info_for_titles(releases: dict):
 
   # return artist's tracks for transform stage
   return releases_info
-
 
 def extract_listeners_from_titles_by_artist(name: str, releases: dict):
   # initialize list for listeners for each title
