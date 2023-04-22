@@ -14,6 +14,7 @@ def clean_the_text(content: dict):
 
 def remove_wrong_values(releases: dict):
     df = pd.DataFrame(releases)
+
     # find and remove the rows/titles where there are no selling prices in discogs.com
     df = df[df['Discogs Price'].notna()]
     print('Remove releases where there no selling price in discogs.com')
@@ -23,10 +24,11 @@ def remove_wrong_values(releases: dict):
     
     return df.to_dict()
 
-def merge_titles_data(releases: dict, listeners: dict):
+def merge_titles_data(releases: dict, playcounts: dict):
     releases_df = pd.DataFrame(releases)
-    listeners_df = pd.DataFrame(listeners)
-    df = pd.merge(releases_df, listeners_df, on='Title')
+    playcounts_df = pd.DataFrame(playcounts)
+
+    df = pd.merge(releases_df, playcounts_df, on='Title')
     print('Merge releases and listeners data')
   
     return df

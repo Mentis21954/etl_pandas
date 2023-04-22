@@ -62,10 +62,10 @@ def find_info_for_titles(releases: dict):
   # return artist's tracks for transform stage
   return releases_info
 
-def extract_listeners_from_titles_by_artist(name: str, releases: dict):
-  # initialize list for listeners for each title
-  listeners = []
-  # find listeners from lastfm for each release title
+def extract_playcounts_from_titles_by_artist(name: str, releases: dict):
+  # initialize list for playcounts for each title
+  playcounts = []
+  # find playcounts from lastfm for each release title
   for index in range(len(releases)):
     title = releases[index]['title']
     url = 'https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=' + LASTFM_API_KEY + '&artist=' + name + '&track='+ title + '&format=json'
@@ -73,13 +73,13 @@ def extract_listeners_from_titles_by_artist(name: str, releases: dict):
     try:
       source = requests.get(url).json()
       if 'track' in source.keys():
-        listeners.append({'Title': source['track']['name'],
-                          'Last.fm Listeners': source['track']['listeners']})
-        print('Found listeners from last.fm for title {}'.format(title))
+        playcounts.append({'Title': source['track']['name'],
+                          'Lastfm Playcount': source['track']['playcount']})
+        print('Found playcount from last.fm for title {}'.format(title))
       else:
-        print('Not found listeners from last.fm for title {}'.format(title))
+        print('Not found playcount from last.fm for title {}'.format(title))
     except:
-      print('Not found listeners from last.fm for title {}'.format(title))
+      print('Not found playcount from last.fm for title {}'.format(title))
       continue
   
-  return listeners
+  return playcounts
