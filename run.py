@@ -15,11 +15,11 @@ content_df = clean_the_text(artist_contents)
 for name in artist_names[:2]:
   # extract
   releases = extract_titles_from_artist(name)
-  listeners = extract_playcounts_from_titles_by_artist(name, releases)
+  playcounts = extract_playcounts_from_titles_by_artist(name, releases)
   releases = find_info_for_titles(releases)
   # transform
   releases = remove_wrong_values(releases)
-  releases_df = merge_titles_data(releases, listeners)
+  releases_df = merge_titles_data(releases, playcounts)
   releases_df = drop_duplicates_titles(releases_df)
   data = integrate_data(content_df, releases_df, name)
   # load
