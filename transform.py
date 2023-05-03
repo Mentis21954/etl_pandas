@@ -1,8 +1,9 @@
 import pandas as pd
 
+
 def clean_the_text(content: dict):
     content_df = pd.DataFrame(content.values(), columns=['Content'], index=content.keys())
-    
+
     # remove new line commands, html tags and "", ''
     content_df['Content'] = content_df['Content'].replace(r'\r+|\n+|\t+', '', regex=True)
     content_df['Content'] = content_df['Content'].replace(r'<[^<>]*>', '', regex=True)
@@ -11,6 +12,7 @@ def clean_the_text(content: dict):
     print('Clean the informations text')
 
     return content_df
+
 
 def remove_wrong_values(releases: dict):
     df = pd.DataFrame(releases)
@@ -21,8 +23,9 @@ def remove_wrong_values(releases: dict):
     # keep only the rows has positive value of year
     df = df[df['Year'] > 0]
     print('Remove releases where have wrong year value in discogs.com')
-    
+
     return df.to_dict()
+
 
 def merge_titles_data(releases: dict, playcounts: dict):
     releases_df = pd.DataFrame(releases)
@@ -30,14 +33,16 @@ def merge_titles_data(releases: dict, playcounts: dict):
 
     df = pd.merge(releases_df, playcounts_df, on='Title')
     print('Merge releases and listeners data')
-  
+
     return df
+
 
 def drop_duplicates_titles(df):
     df = df.drop_duplicates(subset=['Title'])
     print('Find and remove the duplicates titles if exist!')
-    
+
     return df.set_index('Title')
+
 
 def integrate_data(content_df, releases_df, name):
     return {'Artist': name,
