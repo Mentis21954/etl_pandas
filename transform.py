@@ -32,7 +32,7 @@ def merge_titles_data(releases: dict, playcounts: dict):
     playcounts_df = pd.DataFrame(playcounts)
 
     df = pd.merge(releases_df, playcounts_df, on='Title')
-    print('Merge releases and listeners data')
+    print('Merge releases and playcounts data')
 
     return df
 
