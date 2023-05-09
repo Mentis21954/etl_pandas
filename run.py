@@ -1,8 +1,11 @@
 import pandas as pd
+import time
 from extract import extract_info_from_artist, extract_titles_from_artist, extract_playcounts_from_titles_by_artist, \
     find_info_for_titles
 from transform import clean_the_text, remove_wrong_values, merge_titles_data, drop_duplicates_titles, integrate_data
 from load import load_to_database
+
+start_time = time.time()
 
 # find names from csv file
 df = pd.read_csv('spotify_artist_data.csv')
@@ -25,3 +28,6 @@ for name in artist_names[:2]:
     data = integrate_data(content_df, releases_df, name)
     # load
     load_to_database(data)
+
+elapsed_time = time.time() - start_time
+print('--- Execution time:{} ---'.format(time.strftime("%H:%M:%S", time.gmtime(elapsed_time))))
