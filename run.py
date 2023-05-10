@@ -12,11 +12,11 @@ df = pd.read_csv('spotify_artist_data.csv')
 artist_names = list(df['Artist Name'].unique())
 
 # find info and return a dataframe
-artist_contents = extract_info_from_artist(artist_names[:2])
+artist_contents = extract_info_from_artist(artist_names[:4])
 # clean the text info from dataframe
 content_df = clean_the_text(artist_contents)
 
-for name in artist_names[:2]:
+for name in artist_names[:4]:
     # extract
     releases = extract_titles_from_artist(name)
     playcounts = extract_playcounts_from_titles_by_artist(name, releases)
