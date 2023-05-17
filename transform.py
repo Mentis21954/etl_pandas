@@ -46,7 +46,8 @@ def sort_titles_by_price(df):
 
 
 def drop_duplicates_titles(df):
-    df = df.drop_duplicates(subset=['Title'])
+    # keep the lowest price
+    df = df.drop_duplicates(subset=['Title'], keep='last')
     print('Find and remove the duplicates titles if exist!')
 
     return df.set_index('Title')
