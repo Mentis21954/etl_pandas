@@ -37,7 +37,7 @@ def merge_titles_data(releases: dict, playcounts: dict):
     return df
 
 
-def sort_releases_by_price(df):
+def sort_titles_by_price(df):
     # sort descending
     df = df.sort_values(['Discogs Price', 'Title'], ascending=False)
     print('Sort titles by highest value')

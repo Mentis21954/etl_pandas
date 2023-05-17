@@ -2,7 +2,7 @@ import pandas as pd
 import time
 from extract import extract_info_from_artist, extract_titles_from_artist, extract_playcounts_from_titles_by_artist, \
     find_info_for_titles
-from transform import clean_the_text, remove_wrong_values, merge_titles_data, sort_releases_by_price, \
+from transform import clean_the_text, remove_wrong_values, merge_titles_data, sort_titles_by_price, \
     drop_duplicates_titles, integrate_data
 from load import load_to_database
 
@@ -25,7 +25,7 @@ for name in artist_names[:4]:
     # transform
     releases = remove_wrong_values(releases)
     releases_df = merge_titles_data(releases, playcounts)
-    releases_df = sort_releases_by_price(releases_df)
+    releases_df = sort_titles_by_price(releases_df)
     releases_df = drop_duplicates_titles(releases_df)
     data = integrate_data(content_df, releases_df, name)
     # load
